@@ -60,8 +60,79 @@ if not do manual cross checking. And add the new record
 2. next step
 
 
+## model datatype and fields in django
+1. Many-to-one relationship i.e many students having same single batch and cant be in multiplr batches at once 
+> fieldName= models.ForeignKey(primarykey_tablename, on_delete= models.PROTECT)
+protect would not allow to delete the record, shows error
+2. to create a model from existing db schema
+> python manage.py inspectdb > filename.py
+3. then do makemigrations and for migrate especially when already db exits the use to skip table already exists.
+> python manage.py migrate --fake-initial
+4. Unique constraint on multiple columns >>>later
+ 
+## dj auth_user
+**store password in a hash**
+- PASSWORD_HASHERS: where thr first algo will be used to has the pass and to verify the password sees if the algo is in the list of algo if not raise valueerror
+- three var: <algo><iteration><salt><hashedpass>
+- password validation to help with poor pass choice from users 
+> AUTH_PASSWORD_VALIDATORS
+
+[password management](https://docs.djangoproject.com/en/5.1/topics/auth/passwords/)
+
+**authentication system**
+How to authenticate a user? by verifying the creds against mainalumni db 
+
+```
+verifyUser={
+    verifyCreds:["full name"->char, regNo-->int, "courseName"-->char, 
+    joinYear-->year or int, endYear-->year or int, "email"-->email, 
+    country code, "mobile?"--> char]
+    notrequiredField: [mobile]
+    courseNames: ["MSInt": 110,
+    "MS": 120,
+    "MSInt-Exit": 111,
+    "MCA": 210,
+    "MTechNIE": 310,
+    "MTechNIS": 320,
+    "MTechCSE": 330,]
+
+}
+```
+**Members are alumni and current PU students maybe faculties too**
+```
+if students then
+    enter regNo, name, coursename, joinyear, instMail
+
+```
+then i'd have to maintain a current student db and alumni db separately
+
+1. members status is needed like registered, profile info, mentor? 
+2. write permissions for users
+3. usertype table and all users type since one user can be in two roles like alumni and staffs, but do we need that in our case?
 
 ### To learn!!
 1. wsgi and asgi(async http req)    
 2. serializer  
-3. models in django     
+3. models in django   
+4. superuser?  
+5. JWT , Djoser
+
+### queries
+1. students can also be verfied right? who the fuck are our user? alumni duh? but then who else?
+2. mentor
+
+
+### register
+
+which is better? usercreation and later verify (or) verify and then usercreation 
+
+```
+    role --> Alumni, current students, staff/faculty
+    email: [alumni:all,
+            students: reg@pondiuni.ac.in,
+            staff: name@pondiuni.ac.in]
+    verify code
+
+```
+
+

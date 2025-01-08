@@ -22,3 +22,4 @@ class OfficialAlumni(models.Model):
     class Meta:
         managed = True
         db_table = 'official_alumni'
+# add column registerd boolean type in db 
