@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from core import views
+from register import views as v
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/verifyUser/', views.alumni_list),
+    path('api/emailv/',v.email_verification),
+    path('api/otpv/<str:email>/',v.verify_otp),
+    path('api/resend/', v.resend_otp)
 ]
